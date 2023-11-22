@@ -20,6 +20,7 @@
 #include "rocksdb/cloud/cloud_storage_provider_impl.h"
 #include "cloud/db_cloud_impl.h"
 #include "cloud/filename.h"
+#include "cloud/cloud_manifest.h"
 #include "cloud/manifest_reader.h"
 #include "db/db_impl/db_impl.h"
 #include "db/db_test_util.h"
