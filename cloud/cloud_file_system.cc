@@ -81,7 +81,7 @@ void CloudFileSystemOptions::Dump(Logger* log) const {
   Header(log, "COptions.delete_cloud_invisible_files_on_open: %d",
          delete_cloud_invisible_files_on_open);
   if (cloud_file_deletion_delay) {
-    Header(log, "          COptions.cloud_file_deletion_delay: %ld",
+    Header(log, "          COptions.cloud_file_deletion_delay: %lld",
            cloud_file_deletion_delay->count());
   }
 }

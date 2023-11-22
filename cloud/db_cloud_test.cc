@@ -374,16 +374,16 @@ class CloudTest : public testing::Test {
   Status ApplyCMDeltaToCloudDB(const CloudManifestDelta& delta) {
     auto st = GetCloudFileSystem()->RollNewCookie(dbname_, delta.epoch, delta);
     if (!st.ok()) {
-      return st;
+      return std::move(st);
     }
     bool applied = false;
     st = GetCloudFileSystem()->ApplyCloudManifestDelta(delta, &applied);
     assert(applied);
     if (!st.ok()) {
-      return st;
+      return std::move(st);
     }
     db_->NewManifestOnNextUpdate();
-    return st;
+    return std::move(st);
   }
 
  protected:

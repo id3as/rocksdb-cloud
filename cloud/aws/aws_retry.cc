@@ -118,10 +118,16 @@ long AwsRetryStrategy::CalculateDelayBeforeNextRetry(
 Status AwsCloudOptions::GetClientConfiguration(
     CloudFileSystem* fs, const std::string& region,
     Aws::Client::ClientConfiguration* config) {
-  config->connectTimeoutMs = 30000;
-  config->requestTimeoutMs = 600000;
 
   const auto& cloud_fs_options = fs->GetCloudFileSystemOptions();
+
+  if (cloud_fs_options.client_configuration) {
+    *config = *(cloud_fs_options.client_configuration.get());
+  }
+  else {
+    config->connectTimeoutMs = 30000;
+    config->requestTimeoutMs = 600000;
+  }
   // Setup how retries need to be done
   config->retryStrategy = std::make_shared<AwsRetryStrategy>(fs);
   if (cloud_fs_options.request_timeout_ms != 0) {
@@ -129,6 +135,7 @@ Status AwsCloudOptions::GetClientConfiguration(
   }
 
   config->region = ToAwsString(region);
+  
   return Status::OK();
 }
 #else

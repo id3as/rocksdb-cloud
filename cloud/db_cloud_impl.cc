@@ -44,8 +44,8 @@ class ConstantSizeSstFileManager : public SstFileManagerImpl {
   }
 
   Status OnAddFile(const std::string& file_path) override {
-    return SstFileManagerImpl::OnAddFile(
-        file_path, uint64_t(constant_file_size_));
+    return SstFileManagerImpl::OnAddFile(file_path,
+                                         uint64_t(constant_file_size_));
   }
 
  private:
@@ -333,7 +333,7 @@ Status DBCloudImpl::DoCheckpointToCloud(
   if (!st.ok()) {
     return st;
   }
-  
+
   // Create a temp MANIFEST file first as this captures all the files we need
   auto current_epoch = cfs->GetCloudManifest()->GetCurrentEpoch();
   auto manifest_fname = ManifestFileWithEpoch("", current_epoch);
@@ -344,7 +344,6 @@ Status DBCloudImpl::DoCheckpointToCloud(
   if (!st.ok()) {
     return st;
   }
-
 
   std::vector<std::pair<std::string, std::string>> files_to_copy;
   for (auto& f : live_files) {
@@ -467,7 +466,7 @@ Status DBCloud::ListColumnFamilies(const DBOptions& db_options,
         DB::ListColumnFamilies(db_options, name, column_families));
   }
 
-  return st;
+  return std::move(st);
 }
 
 }  // namespace ROCKSDB_NAMESPACE

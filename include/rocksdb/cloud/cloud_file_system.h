@@ -221,6 +221,9 @@ class CloudFileSystemOptions {
   // Access credentials
   AwsCloudAccessCredentials credentials;
 
+  // AWS Client Configuration
+  std::shared_ptr<Aws::Client::ClientConfiguration> client_configuration;
+    
   // If present, s3_client_factory will be used to create S3Client instances
   S3ClientFactory s3_client_factory;
 
